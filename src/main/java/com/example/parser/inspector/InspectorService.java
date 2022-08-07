@@ -42,8 +42,8 @@ public class InspectorService {
     }
 
     private void inspect(String walletName, Object keystore) throws IOException {
-        JSONObject jsonObject = (JSONObject) keystore;
-        String fileName = jsonObject.get("address").toString();
+        JSONObject thisKeystore = (JSONObject) keystore;
+        String fileName = thisKeystore.get("address").toString();
 
         Reader reader = new FileReader(toBeFileDir + File.separator + fileName);
         JSONParser jsonParser = new JSONParser();
@@ -51,15 +51,15 @@ public class InspectorService {
         try {
             JSONObject targetKeyStore = (JSONObject) jsonParser.parse(reader);
 
-            if (!targetKeyStore.get("address").equals(jsonObject.get("address"))) {
+            if (!targetKeyStore.get("address").equals(thisKeystore.get("address"))) {
                 throw new BadAttributeValueExpException(walletName + "의 address 정보가 일치하지 않습니다.");
             }
 
-            if (!targetKeyStore.get("pub_key").equals(jsonObject.get("pub_key"))) {
+            if (!targetKeyStore.get("pub_key").equals(thisKeystore.get("pub_key"))) {
                 throw new BadAttributeValueExpException(walletName + "의 address 정보가 일치하지 않습니다.");
             }
 
-            if (!targetKeyStore.get("priv_key").equals(jsonObject.get("priv_key"))) {
+            if (!targetKeyStore.get("priv_key").equals(thisKeystore.get("priv_key"))) {
                 throw new BadAttributeValueExpException(walletName + "의 address 정보가 일치하지 않습니다.");
             }
 
